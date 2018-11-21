@@ -17,11 +17,12 @@ cfg_if! {
 }
 
 #[wasm_bindgen]
-extern {
+extern "C" {
     fn alert(s: &str);
 }
 
 #[wasm_bindgen]
-pub fn greet() {
-    alert("Hello, game-of-life!");
+pub fn greet(who: &str) {
+    let msg = format!("Hello, {}!", who);
+    alert(&msg);
 }
