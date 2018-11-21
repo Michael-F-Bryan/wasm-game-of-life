@@ -18,11 +18,6 @@ cfg_if! {
 }
 
 #[wasm_bindgen]
-extern "C" {
-    fn alert(s: &str);
-}
-
-#[wasm_bindgen]
 #[repr(u8)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Cell {
@@ -81,10 +76,6 @@ impl Universe {
             }
         }
     }
-
-    fn index_of(&self, x: usize, y: usize) -> usize {
-        y * self.width + x
-    }
 }
 
 #[wasm_bindgen]
@@ -95,6 +86,22 @@ impl Universe {
             height,
             cells: vec![Cell::Dead; width * height],
         }
+    }
+
+    pub fn width(&self) -> usize {
+        self.width
+    }
+
+    pub fn height(&self) -> usize {
+        self.height
+    }
+
+    pub fn cells(&self) -> *const Cell {
+        self.cells.as_ptr()
+    }
+
+    pub fn index_of(&self, x: usize, y: usize) -> usize {
+        y * self.width + x
     }
 
     pub fn tick(&self) -> Universe {
